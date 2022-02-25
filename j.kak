@@ -24,6 +24,7 @@ add-highlighter shared/j/code default-region group
 add-highlighter shared/j/comment1 region 'NB\.'                  '$' fill comment
 add-highlighter shared/j/comment2 region "Note\h*'[^)]+'[^)]*?" '\)' fill comment
 
+
 add-highlighter shared/j/code/ regex \b_?(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:)(?:(?:j|a[rd])_?(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:))?\b \
     0:rgb:9966cc # numerals: *10^, *e^, * pi^, real, rational, complex, polar
 add-highlighter shared/j/code/ regex \b(?:_?\d+b_?\w+)\b \
@@ -33,9 +34,9 @@ add-highlighter shared/j/code/ regex (?:\b[xymn]\b|_(?![0-9])\.?|a[.:]) \
 add-highlighter shared/j/code/ regex \b(?:(?:[a-lo-twzA-Z]\w*|[xymnuv]\w+)(?![.:]))\b \
     0:rgb:bbddff # variables
 add-highlighter shared/j/code/ regex (?:(?<![-+=<>_*%^$~|,#{}"?AabCiFIjLopruv0-9])\.|"(?![.:])|`:?|\^:|@[.:]?|&\.?|&::?|(?<![-+=<>_*%$~|,\;#/\\{"aiFpqsSuxZ\[\d]):[.:]?|(?<!_\^\d):[.:]?) \
-    0:rgb:66dd44 # conjunctions
-add-highlighter shared/j/code/ regex (?:\]|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?<!:)\.?|[~}"i][.:]|[\;\[]:?|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.|_?[0-3]?\d+\h+b\.) \
-    0:rgb:ee2672 # verbs
+    0:rgb:66ee44 # conjunctions
+add-highlighter shared/j/code/ regex (?:\]|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\;\[]:?|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.|_?[0-3]?\d+\h+b\.) \
+    0:rgb:ee3377 # verbs
 add-highlighter shared/j/code/ regex (?:~(?![.:])|[/\\](?!:)\.?|[/\\]\.?|[fM]\.|\]:|\}(?![.:])|[a-zA-Z]\w*\h+b\.) \
     0:rgb:1177bb # adverbs
 add-highlighter shared/j/code/ regex (?:=[.:])) \
@@ -44,6 +45,8 @@ add-highlighter shared/j/code/ regex (?:\{\{(?![.:])(?:\)[mdvacn]?)?|\}\}(?![.:]
     0:rgb:ffff77 # controls
 add-highlighter shared/j/code/ regex (?:\d|1(?:[358]|28))!:\d+ \
     0:rgb:55ffcc # foreigns
+
+
 §
 # j903 working completely
 # TODO HOOK, FOOKS, MODIFIER TRAINS?
