@@ -38,7 +38,7 @@ add-highlighter shared/j/code/ regex \b(?:(?:[a-lo-twzA-Z]\w*|[xymnuv]\w+)(?![.:
 add-highlighter shared/j/code/ regex (?:(?<![-+=<>_*%^$~|,#{}"?AabCiFIjLopruv0-9])\.|(?<![-+=<>_*%$~|,\;#/\\{"aiFpqsSuxZ\[\d]):[.:]?|"(?![.:])|`:?|\^:|@[.:]?|&\.?|&::?|(?<![_\^a]):[.:]?|\;\.(?:0|[+_][123])?|![.:]|F[.:][.:]?|[\[\]]\.) 0:rgb:88ee33
 
 # verbs
-add-highlighter shared/j/code/ regex (?:[\[\]](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.) 0:rgb:ee3377
+add-highlighter shared/j/code/ regex (?:\[(?![.:])|\](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.) 0:rgb:ee3377
 
 # adverbs
 add-highlighter shared/j/code/ regex (?:~(?![.:])|[/\\](?!:)\.?|[/\\](?![.:])\.?|[fM]\.|\]:|\}(?![.:])|[a-zA-Z]\w*\h+b\.|b\.) 0:rgb:1177bb
@@ -47,7 +47,7 @@ add-highlighter shared/j/code/ regex (?:~(?![.:])|[/\\](?!:)\.?|[/\\](?![.:])\.?
 add-highlighter shared/j/code/ regex (?:=[.:])) 0:rgb:dddddd
 
 # controls
-add-highlighter shared/j/code/ regex (?:\{\{(?![.:])(?:\)[mdvacn]?)?|\}\}(?![.:])|(?:assert|break|continue|else(?:if)?|do|for(?:_i(?:jk)?)?|(?:goto|label)_lbl|if|end|return|select|f?case|throw|try|catch[dt]?|whil(?:e|st))\.) 0:rgb:eeee88
+add-highlighter shared/j/code/ regex (?:\{\{(?![.:])(?:\)[mdvacn]?)?|\}\}(?![.:])|(?:assert|break|continue|else(?:if)?|do|for(?:_[a-zA-Z]\w*)?|(?:goto|label)_[a-zA-Z]\w*|if|end|return|select|f?case|throw|try|catch[dt]?|whil(?:e|st))\.) 0:rgb:eeee88
 
 # foreigns
 #add-highlighter shared/j/code/ regex (?:\d|1(?:[358]|28))!:\d+ # 0:rgb:55ffcc # foreigns
