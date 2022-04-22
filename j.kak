@@ -30,24 +30,27 @@ hook global WinSetOption filetype=j %{
 
 provide-module j %§
 add-highlighter shared/j regions
-add-highlighter shared/j/comment1 region (?<![\w])NB\.(?![:.])     $  fill comment
-add-highlighter shared/j/comment2 region Note\h*'[^)]*'[^)]*       \) fill comment
+add-highlighter shared/j/comment1 region (?<![\w'])NB\.(?![:.])         $  fill comment
+add-highlighter shared/j/comment2 region (?<![\w'])Note\h*'[^)]*'[^)]*  \) fill comment
 
 add-highlighter shared/j/code default-region group
 
-# numerals: *10^, *e^, * pi^, real, rational, complex, polar, base-up-to-36 numbers (1-z) to decimal, possibly negative https://www.jsoftware.com/help/dictionary/dcons.htm
-add-highlighter shared/j/code/ regex \b_?(?:(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:)(?:(?:j|a[rd])_?(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:))?|\d+b_?\w+)\b 0:rgb:9977cc
+# numerals/value: *10^, *e^, * pi^, real, rational, complex, polar, base-up-to-36 numbers (1-z) to decimal, possibly negative https://www.jsoftware.com/help/dictionary/dcons.htm
+add-highlighter shared/j/code/ regex \b_?(?:(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:)(?:(?:j|a[rd])_?(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:))?|\d+b_?\w+)x?\b 0:rgb:9977cc
 
-# nouns
-add-highlighter shared/j/code/ regex (?:\b[xymn]\b|_(?![0-9])\.?|a[.:]) 0:rgb:ff7722
+# nouns/value
+add-highlighter shared/j/code/ regex (?:\b[xymn]\b|_?_(?![0-9])\.?|a[.:]) 0:rgb:ff7722
 
-# variables
+# variables/variables
 add-highlighter shared/j/code/ regex \b(?:(?:[a-lo-twzA-Z]\w*|[xymnuv]\w+)(?![.:]))\b 0:rgb:bbddff
 
-# conjunctions
-add-highlighter shared/j/code/ regex (?:(?<![-+=<>_*%^$~|,#{}"?AabCiFIjLopruv0-9])\.|(?<![-+=<>_*%$~|,\;#/\\{"aiFpqsSuxZ\[\d]):[.:]?|"(?![.:])|`:?|\^:|@[.:]?|&\.?|&::?|(?<![_\^a]):[.:]?|\;\.(?:0|[+_][123])?|![.:]|F[.:][.:]?|[\[\]]\.) 0:rgb:88ee33
+# nouns/strings, not definitions
+add-highlighter shared/j/code/ regex "(?<!\d :)\h*'[^']*'" 0:rgb:9977cc
 
-# verbs
+# conjunctions
+add-highlighter shared/j/code/ regex (?:(?<=\h)\.|(?<![-+=<>_*%$~|,\;#/\\{"aiFpqsSuxZ\[\d]):[.:]?|"(?![.:])|`:?|\^:|@[.:]?|&\.?|&::?|(?<![_\^a]):[.:]?|\;\.(?:0|[+_][123])?|![.:]|F[.:][.:]?|[\[\]]\.) 0:rgb:88ee33
+
+# verbs/functions
 add-highlighter shared/j/code/ regex (?:\[(?![.:])|\](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.) 0:rgb:ee3377
 
 # adverbs
@@ -56,9 +59,13 @@ add-highlighter shared/j/code/ regex (?:~(?![.:])|[/\\](?!:)\.?|[/\\](?![.:])\.?
 # copulas
 add-highlighter shared/j/code/ regex (?:=[.:])) 0:rgb:dddddd
 
-# controls
+# controls/keywords
 add-highlighter shared/j/code/ regex (?:\{\{(?![.:])(?:\)[mdvacn]?)?|\}\}(?![.:])|(?:assert|break|continue|else(?:if)?|do|for(?:_[a-zA-Z]\w*)?|(?:goto|label)_[a-zA-Z]\w*|if|end|return|select|f?case|throw|try|catch[dt]?|whil(?:e|st))\.) 0:rgb:eeee88
 
-§
+# WIP
+# declare-user-mode j
 
-# TODO HOOK, FOOKS, MODIFIER TRAINS?
+
+
+
+§

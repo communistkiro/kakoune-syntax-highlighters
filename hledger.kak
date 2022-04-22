@@ -32,9 +32,7 @@ hook -group hledger-highlight global WinSetOption filetype=hledger %{
 # ----------
 
 hook -group hledger-complete global WinSetOption filetype=hledger %{
-    set-option window static_words account note alias payee check assert eval \
-        default apply fixed bucket capture comment commodity format nomarket \
-        define end include tag test year
+    set-option window static_words account note alias payee check assert eval default apply fixed bucket capture comment commodity format nomarket define end include tag test year
 }
 
 provide-module hledger %[
@@ -67,8 +65,7 @@ add-highlighter shared/hledger/other region '^(P|=|~)' '$' fill meta
 # Add highlighters for simple one-line command directives
 evaluate-commands %sh{
     # TODO: Is `expr` also a command directive? The documentation confuses me.
-    for cmd in 'apply account' 'apply fixed' 'assert' 'bucket' 'check' 'end' \
-               'include' 'apply tag' 'test' 'year'; do
+    for cmd in 'apply account' 'apply fixed' 'assert' 'bucket' 'check' 'end' 'include' 'apply tag' 'test' 'year'; do
         echo "add-highlighter shared/hledger/ region '^${cmd}' '.' fill function"
     done
 }
@@ -84,16 +81,14 @@ add-highlighter shared/hledger/account/eval       regex '^\h*eval'    0:function
 add-highlighter shared/hledger/account/default    regex '^\h*default' 0:function
 
 add-highlighter shared/hledger/alias region '^alias' '$' group
-add-highlighter shared/hledger/alias/keyword regex '^alias' 0:function
-add-highlighter shared/hledger/alias/key regex '^alias\h([^$=]*)=?' 1:variable
-add-highlighter shared/hledger/alias/value regex '^alias\h.*?=(.*?)$' 1:value
+add-highlighter shared/hledger/alias/keyword regex '^alias'             0:function
+add-highlighter shared/hledger/alias/key     regex '^alias\h([^$=]*)=?' 1:variable
+add-highlighter shared/hledger/alias/value   regex '^alias\h.*?=(.*?)$' 1:value
 
 add-highlighter shared/hledger/capture region '^capture' '$' group
-add-highlighter shared/hledger/capture/keyword regex '^capture' 0:function
-add-highlighter shared/hledger/capture/account regex \
-    '^capture\h+(.*?)(  +|\t+|$)' 1:type
-add-highlighter shared/hledger/capture/regex regex \
-    '^capture\h+.*?(  +|\t+)(.*?)$' 2:value
+add-highlighter shared/hledger/capture/keyword regex '^capture'                      0:function
+add-highlighter shared/hledger/capture/account regex '^capture\h+(.*?)(  +|\t+|$)'   1:type
+add-highlighter shared/hledger/capture/regex   regex '^capture\h+.*?(  +|\t+)(.*?)$' 2:value
 
 add-highlighter shared/hledger/comment_block region '^comment' '^end comment' \
     fill comment
@@ -107,9 +102,9 @@ add-highlighter shared/hledger/commodity/alias      regex '^\h*alias'    0:funct
 add-highlighter shared/hledger/commodity/default    regex '^\h*default'  0:function
 
 add-highlighter shared/hledger/define region '^define' '$' group
-add-highlighter shared/hledger/define/keyword regex '^define' 0:function
-add-highlighter shared/hledger/define/key regex '^define\h([^$=]*)=?' 1:variable
-add-highlighter shared/hledger/define/value regex '^define\h.*?=(.*?)$' 1:value
+add-highlighter shared/hledger/define/keyword regex '^define'             0:function
+add-highlighter shared/hledger/define/key     regex '^define\h([^$=]*)=?' 1:variable
+add-highlighter shared/hledger/define/value   regex '^define\h.*?=(.*?)$' 1:value
 
 add-highlighter shared/hledger/payee region '^payee' '^(?=\H)' group
 add-highlighter shared/hledger/payee/first_line regex '^payee'    0:function
