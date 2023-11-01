@@ -21,21 +21,21 @@ provide-module zsh %§
 
 add-highlighter shared/zsh regions
 add-highlighter shared/zsh/code default-region group
-
 add-highlighter shared/zsh/arithmetic    region -recurse \(.*?\( (\$|(?<=for)\h*)\(\( \)\) group
 add-highlighter shared/zsh/double_string region %{(?<!\\)(?:\\\\)*\K"} %{(?<!\\)(?:\\\\)*"} group
-add-highlighter shared/zsh/single_string region %{(?<!\\)(?:\\\\)*\K'} %{'} fill string
+add-highlighter shared/zsh/single_string region %{(?<!\\)(?:\\\\)*\K'} \' fill string
 add-highlighter shared/zsh/expansion     region -recurse (?<!\\)(?:\\\\)*\K\$\{ (?<!\\)(?:\\\\)*\K\$\{ \}|\n fill value
 add-highlighter shared/zsh/comment       region (?<!\\)(?:\\\\)*(?:^|\h)\K# '$' fill comment
 add-highlighter shared/zsh/heredoc       region -match-capture '<<-?\h*''?(\w+)''?' '^\t*(\w+)$' fill string
-
+add-highlighter shared/zsh/herestring    region -match-capture <<<\h*(['"]?)\S+ (['"]?) fill string
+add-highlighter shared/zsh/flags         region -recurse (?<=\$\{)\( (?<=\$\{)\( \) group # globbing flags kind of too
 add-highlighter shared/zsh/arithmetic/expansion ref zsh/double_string/expansion
 add-highlighter shared/zsh/double_string/fill fill string
 
 evaluate-commands %sh@
-    printf %s\\n 'declare-option str-list zsh_static_words if export declare function else float end do typeset then integer \{ select readonly coproc \} ! case \[\[ repeat done for while time esac until local fi nocorrect foreach elif unset rehash popd ulimit local jobs disable \[ compfiles printf autoload noglob pushln zle readonly exit false times sysopen sched setopt getln builtin let bg zstat which unhash pwd zparseopts logout disown type source eval comptags compdescribe compctl zmodload sysseek syswrite zregexparse history return exec compadd emulate chdir ttyctl test comparguments pushd functions float zstyle print declare comptry alias shift \. bindkey typeset true hash compset cd compvalues getopts compgroups export enable limit echotc echo wait dirs syserror unsetopt read integer bye echoti compquote unfunction fc vared unalias kill compcall where fg zformat suspend unlimit break set continue command zcompile whence umask sysread trap zsystem log private'
-    printf %s\\n 'add-highlighter shared/zsh/code/ regex (?<!-)\b(if|export|declare|function|else|float|end|do|typeset|then|integer|\{|select|readonly|coproc|\}|!|case|\[\[|repeat|done|for|while|time|esac|until|local|fi|nocorrect|foreach|elif)\b(?!-) 0:keyword'
-    printf %s 'add-highlighter shared/zsh/code/builtin regex (?<!-)\b(unset|rehash|popd|ulimit|local|jobs|disable|\[|compfiles|printf|autoload|noglob|pushln|zle|readonly|exit|false|times|sysopen|sched|setopt|getln|builtin|let|bg|zstat|which|unhash|pwd|zparseopts|logout|disown|type|source|eval|comptags|compdescribe|compctl|zmodload|sysseek|syswrite|zregexparse|history|return|exec|compadd|emulate|chdir|ttyctl|test|comparguments|pushd|functions|float|zstyle|print|declare|comptry|alias|shift|\.|bindkey|typeset|true|hash|compset|cd|compvalues|getopts|compgroups|export|enable|limit|echotc|echo|wait|dirs|syserror|unsetopt|read|integer|bye|echoti|compquote|unfunction|fc|vared|unalias|kill|compcall|where|fg|zformat|suspend|unlimit|break|set|continue|command|zcompile|whence|umask|sysread|trap|zsystem|log|private)\b(?!-) 0:builtin'
+    printf %s\\n 'declare-option str-list zsh_static_words if export declare function else float end do typeset then integer \{ select readonly coproc \} ! case \[\[ repeat done for while time esac until local fi nocorrect foreach elif unset rehash popd ulimit local jobs disable \[ compfiles printf autoload noglob pushln zle readonly exit false times sysopen sched setopt getln builtin let bg zstat which unhash pwd zparseopts logout disown type source eval comptags compdescribe compctl zmodload sysseek syswrite zregexparse history return exec compadd emulate chdir ttyctl test comparguments pushd functions float zstyle print declare comptry alias shift \. bindkey typeset true hash compset cd compvalues getopts compgroups export enable limit echotc echo wait dirs syserror unsetopt read integer bye echoti compquote unfunction fc vared unalias kill compcall where fg zformat suspend unlimit break set continue command zcompile whence umask sysread trap zsystem log private';
+    printf %s\\n 'add-highlighter shared/zsh/code/ regex (?<!-)\b(if|export|declare|function|else|float|end|do|typeset|then|integer|\{|select|readonly|coproc|\}|!|case|\[\[|repeat|done|for|while|time|esac|until|local|fi|nocorrect|foreach|elif)\b(?!-) 0:keyword';
+    printf %s\\n 'add-highlighter shared/zsh/code/builtin regex (?<!-)\b(unset|rehash|popd|ulimit|local|jobs|disable|\[|compfiles|printf|autoload|noglob|pushln|zle|readonly|exit|false|times|sysopen|sched|setopt|getln|builtin|let|bg|zstat|which|unhash|pwd|zparseopts|logout|disown|type|source|eval|comptags|compdescribe|compctl|zmodload|sysseek|syswrite|zregexparse|history|return|exec|compadd|emulate|chdir|ttyctl|test|comparguments|pushd|functions|float|zstyle|print|declare|comptry|alias|shift|\.|bindkey|typeset|true|hash|compset|cd|compvalues|getopts|compgroups|export|enable|limit|echotc|echo|wait|dirs|syserror|unsetopt|read|integer|bye|echoti|compquote|unfunction|fc|vared|unalias|kill|compcall|where|fg|zformat|suspend|unlimit|break|set|continue|command|zcompile|whence|umask|sysread|trap|zsystem|log|private)\b(?!-) 0:builtin';
 @
 
 add-highlighter shared/zsh/code/operators          regex [\[\]\(\)&|]{1,2}                                  0:operator
@@ -43,15 +43,10 @@ add-highlighter shared/zsh/code/variable           regex ((?<![-:])\b\w+)=      
 add-highlighter shared/zsh/code/alias              regex \balias(\h+[-+]\w)*\h+([\w-.]+)=                   2:variable
 add-highlighter shared/zsh/code/function           regex ^\h*(\S+|\(\))\h*\(\)                              1:function
 add-highlighter shared/zsh/code/subshell           regex \s((\()\s+.*\s+(\))|(\{)\s+.*\s+(\}))\s            2:operator 3:operator
-add-highlighter shared/zsh/code/range              regex (\{)\S+\.\.\S+(\.\.\d+)?(\})                       1:operator 2:operator
+add-highlighter shared/zsh/code/range              regex (\{\S+\.\.\S+(?:\.\.\S+)?\})                       0:operator
 add-highlighter shared/zsh/code/unscoped_expansion regex (?<!\\)(?:\\\\)*\K\$(\w+|#|@|\?|\$|!|-|\*)         0:value
 add-highlighter shared/zsh/double_string/expansion regex (?<!\\)(?:\\\\)*\K\$(\w+|#|@|\?|\$|!|-|\*|\{.+?\}) 0:value
-
-# parameter expansion flags
-# globbing flags
-# redirections
-
-
+add-highlighter shared/zsh/redirections            regex (?:<{1,2}|>{1,2})[&|]? 0:operator
 
 
 # Commands
