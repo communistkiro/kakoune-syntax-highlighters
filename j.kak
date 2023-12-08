@@ -14,6 +14,7 @@ hook -group j-highlight global WinSetOption filetype=j %{
     try %{ add-highlighter -override global/wrap_-indent; };
   };
   set-option buffer comment_line 'NB.';
+#   requires library
 #   set-option buffer comment_block_begin "Note''";
 #   set-option buffer comment_block_end ';
 # )'
@@ -30,10 +31,10 @@ hook global WinSetOption filetype=j %{
 provide-module j %§
   add-highlighter -override shared/j regions;
   add-highlighter -override shared/j/comment1 region (?<![\w'])NB\.(?![:.])         $  fill comment;
+  # requires library
   # add-highlighter -override shared/j/comment2 region (?<![\w'])Note\h*'[^)]*'[^)]*  \) fill comment;
 
   add-highlighter -override shared/j/code default-region group;
-
 
   # CONSTANT NUMERAL/VALUE: *10^, *e^, * pi^, real, rational, complex, polar, base-up-to-36 numbers (1-z) to decimal, possibly negative https://www.jsoftware.com/help/dictionary/dcons.htm
   add-highlighter -override shared/j/code/ regex \b_?(?:(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:)(?:(?:j|a[rd])_?(?:\d+\.?\d*|_?\d+\.?\d*r_?\d+\.?\d*)(?:e_?\d+|[xp]_?(?:\d*\.?\d+|\d+\.?\d*))?(?<!:))?|\d+b_?\w+)x?\b 0:rgb:9977ee;
@@ -42,19 +43,19 @@ provide-module j %§
   # # IDENTIFIERS/VARIABLES
   # add-highlighter -override shared/j/code/ regex \b(?:(?:[a-lo-twzA-Z]\w*|[xymnuv]\w+)(?![.:]))\b 0:rgb:bbddff;
   # CONJUNCTION
-  add-highlighter -override shared/j/code/ regex (?:(?<=\h)\.|(?<![-+=<>_*%$~|,\;#/\\{"aiFpqsSuxZ\[\d]):[.:]?|"(?![.:])|`:?|\^:|@[.:]?|&\.?|&::?|(?<![_\^a]):[.:]?|![.:]|F[.:][.:]?|[\[\]]\.|\;\.) 0:rgb:77ee33;
-  # VERB
+  add-highlighter -override shared/j/code/ regex (?:(?<=\h)\.|(?<![-+=<>_*%$~|,\;#/\\{"aiFpqsSuxZ\[\d]):[.:]?|"(?![.:])|`:?|\^:|@[.:]?|&\.?|&::?|(?<![_\^a]):[.:]?|![.:]|F[.:][.:]?|[\[\]]\.|\;\.|[LS]:) 0:rgb:77ee33;
+  # VEB
   add-highlighter -override shared/j/code/ regex (?:\[(?![.:])|\](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.) 0:rgb:ee3377;
-  # HOOK
-  add-highlighter -override shared/j/code/ regex (?:\h*(\[(?![.:])|\](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.)\h*){2} 0:+ai
-  # FORK
-  add-highlighter -override shared/j/code/ regex (?:\h*(\[(?![.:])|\](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.)\h*){3} 0:+ab
-  # ADVERB
+  # # HOK fixme parses left to right
+  # add-highlighter -override shared/j/code/ regex (?:\h*(\[(?![.:])|\](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.)\h*){2} 0:+i
+  # # FORK
+  # add-highlighter -override shared/j/code/ regex (?:\h*(\[(?![.:])|\](?!\.)|(?:\b[uv]\b|[=!])(?![.:])|[-<>+*%$|,#{][.:]?|\{::|[?^](?!:)\.?|[~}"i][.:]|[\\/]:|\[:|\;(?!\.)|[ACeEIjLopruv]\.|(?:[pqsxZu]|_?\d|_):|p\.\.)\h*){3} 0:+b
+  # # ADVERB
   add-highlighter -override shared/j/code/ regex (?:~(?![.:])|[/\\](?!:)\.?|[/\\](?![.:])\.?|/\.\.|[fM]\.|\]:|\}(?![.:])|[a-zA-Z]\w*\h+b\.|b\.|\;\.(?:0|[+_]?[123])) 0:rgb:1177bb;
   # COPULA
   add-highlighter -override shared/j/code/ regex (?:=[.:])) 0:rgb:808080;
   # CONTROL
-  add-highlighter -override shared/j/code/ regex (?:\{\{(?![.:])(?:\)[mdvacn]?)?|\}\}(?![.:])|\b(?:assert|break|continue|else(?:if)?|do|for(?:_[a-zA-Z]\w*)?|(?:goto|label)_[a-zA-Z]\w*|if|end|return|select|f?case|throw|try|catch[dt]?|whil(?:e|st))\.) 0:rgb:eeee77;
+  add-highlighter -override shared/j/code/ regex (?:\{\{(?![.:])(?:\)[mdvacn]\h*\n)?|\}\}(?![.:])|\b(?:assert|break|continue|else(?:if)?|do|for(?:_[a-zA-Z]\w*)?|(?:goto|label)_[a-zA-Z]\w*|if|end|return|select|f?case|throw|try|catch[dt]?|whil(?:e|st))\.) 0:rgb:eeee77;
   # # NOUN, STRING, NOT DEFINITION
   # add-highlighter -override shared/j/code/ regex (?<!\d\h:)\h*('[^\n']*') 1:rgb:9977cc;
   # NOUN, STRING
